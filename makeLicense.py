@@ -1,8 +1,9 @@
 import json
-import os
 import sys
+import glob
+from typing import List
 
-def read_py_license_file(filename):
+def read_py_license_file(filename: str) -> List[str]:
     """Read Python license file format and extract license texts"""
     try:
         with open(filename) as f:
@@ -19,7 +20,7 @@ def read_py_license_file(filename):
         print(f"Error reading Python license file {filename}: {str(e)}", file=sys.stderr)
         return []
 
-def read_js_license_file(filename):
+def read_js_license_file(filename: str) -> List[str]:
     """Read JavaScript/TypeScript license file format and extract license texts"""
     try:
         with open(filename) as f:
@@ -50,14 +51,21 @@ def read_js_license_file(filename):
         print(f"Error reading JavaScript/TypeScript license file {filename}: {str(e)}", file=sys.stderr)
         return []
 
-def main():
+def main() -> None:
     # Read all license files
-    py_licenses = read_py_license_file('third-party-licenses-py-job-runner.json')
-    ts_licenses = read_js_license_file('third-party-licenses-ts-job-runner.json')
-    gh_licenses = read_js_license_file('third-party-licenses-benchify-github.json')
+    py_licenses = []
+    ts_licenses = []
+    
+    # Read all Python license files
+    for py_file in glob.glob('python/*.json'):
+        py_licenses.extend(read_py_license_file(py_file))
+        
+    # Read all TypeScript/JavaScript license files 
+    for ts_file in glob.glob('ts/*.json'):
+        ts_licenses.extend(read_js_license_file(ts_file))
     
     # Combine all license texts
-    all_licenses = py_licenses + ts_licenses + gh_licenses
+    all_licenses = list(set(py_licenses + ts_licenses))
     
     # Write combined output
     try:
