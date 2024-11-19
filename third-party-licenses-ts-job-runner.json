@@ -1,0 +1,10 @@
+{
+  "benchify-ts-job-runner@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/Benchify/ts-job-runner",
+    "publisher": "Benchify",
+    "path": "/Users/maxvonhippel/projects/work/benchify/ts-job-runner",
+    "licenseFile": "/Users/maxvonhippel/projects/work/benchify/ts-job-runner/README.md"
+  }
+}
+
